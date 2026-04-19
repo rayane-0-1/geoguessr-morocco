@@ -1,0 +1,86 @@
+[
+  {
+    "id": "rabat",
+    "name": "Rabat",
+    "nameAr": "الرباط",
+    "coords": [34.0209, -6.8416],
+    "description": "The capital city of Morocco, blending modern culture with historical depth."
+  },
+  {
+    "id": "casablanca",
+    "name": "Casablanca",
+    "nameAr": "الدار البيضاء",
+    "coords": [33.5731, -7.5898],
+    "description": "The economic hub and modern metropolis, home to the iconic Hassan II Mosque."
+  },
+  {
+    "id": "marrakesh",
+    "name": "Marrakesh",
+    "nameAr": "مراكش",
+    "coords": [31.6295, -7.9811],
+    "description": "Known as the Red City, famous for its vibrant souks, gardens, and palaces."
+  },
+  {
+    "id": "fes",
+    "name": "Fes",
+    "nameAr": "فاس",
+    "coords": [34.0333, -5.0000],
+    "description": "The spiritual heart of Morocco, with the oldest medina in the world."
+  },
+  {
+    "id": "meknes",
+    "name": "Meknes",
+    "nameAr": "مكناس",
+    "coords": [33.8935, -5.5473],
+    "description": "One of the four imperial cities, known for its grand gates and Roman ruins."
+  },
+  {
+    "id": "ouarzazate",
+    "name": "Ouarzazate",
+    "nameAr": "ورزازات",
+    "coords": [30.9333, -6.9167],
+    "description": "The gateway to the Sahara Desert and a famous film location."
+  },
+  {
+    "id": "chefchaouen",
+    "name": "Chefchaouen",
+    "nameAr": "شفشاون",
+    "coords": [35.1714, -5.2697],
+    "description": "The Blue City, nestled in the Rif Mountains with its striking blue-washed buildings."
+  },
+  {
+    "id": "essaouira",
+    "name": "Essaouira",
+    "nameAr": "الصويرة",
+    "coords": [31.5085, -9.7595],
+    "description": "A breezy coastal town known for its medina and Gnaoua music festival."
+  },
+  {
+    "id": "tangier",
+    "name": "Tangier",
+    "nameAr": "طنجة",
+    "coords": [35.7595, -5.8339],
+    "description": "The white city on the Strait of Gibraltar, where Africa meets Europe."
+  },
+  {
+    "id": "azilal",
+    "name": "Azilal",
+    "nameAr": "أزيلال",
+    "coords": [31.9667, -6.5667],
+    "description": "A city in the Central Atlas mountains, gateway to spectacular natural wonders."
+  },
+  {
+    "id": "agadir",
+    "name": "Agadir",
+    "nameAr": "أكادير",
+    "coords": [30.4278, -9.5981],
+    "description": "A major city on the Atlantic coast, known for its beaches and modern landmarks."
+  },
+  {
+    "id": "ifrane",
+    "name": "Ifrane",
+    "nameAr": "إفران",
+    "coords": [33.5272, -5.1067],
+    "description": "Known as 'Little Switzerland' for its European-style architecture and cedar forests."
+  }
+]

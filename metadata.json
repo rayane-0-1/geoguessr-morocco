@@ -1,0 +1,9 @@
+{
+  "name": "Morocco Discovery Game",
+  "description": "An interactive educational geography game for discovering Moroccan monuments and cities with multiple modes and satellite-link simulation UI.",
+  "requestFramePermissions": [
+    "geolocation",
+    "camera"
+  ],
+  "majorCapabilities": []
+}

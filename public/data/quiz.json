@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "question": "Which Moroccan city is famous for its blue-washed buildings?",
+    "options": ["Marrakesh", "Chefchaouen", "Tangier", "Casablanca"],
+    "answer": "Chefchaouen",
+    "explanation": "Chefchaouen is known as the Blue City because of its iconic blue-painted medina alleys."
+  },
+  {
+    "id": 2,
+    "question": "The Hassan II Mosque, one of the largest in the world, is located in which city?",
+    "options": ["Rabat", "Marrakesh", "Meknes", "Casablanca"],
+    "answer": "Casablanca",
+    "explanation": "The Hassan II Mosque is a landmark of Casablanca, featuring the second tallest minaret in the world."
+  },
+  {
+    "id": 3,
+    "question": "What is the name of the ancient Roman ruins located near Meknes?",
+    "options": ["Volubilis", "Carthage", "Lixus", "Thamusida"],
+    "answer": "Volubilis",
+    "explanation": "Volubilis is a well-preserved Roman archaeological site and a UNESCO World Heritage site near Meknes."
+  },
+  {
+    "id": 4,
+    "question": "The Aït Benhaddou ksar is a famous film location in which province?",
+    "options": ["Agadir", "Ouarzazate", "Tangier", "Fes"],
+    "answer": "Ouarzazate",
+    "explanation": "Aït Benhaddou is located in the Ouarzazate province and has been featured in many movies and series like Game of Thrones."
+  },
+  {
+    "id": 5,
+    "question": "Which of these is one of the four Imperial Cities of Morocco?",
+    "options": ["Tangier", "Agadir", "Meknes", "Chefchaouen"],
+    "answer": "Meknes",
+    "explanation": "The four Imperial Cities of Morocco are Fes, Marrakesh, Rabat, and Meknes."
+  },
+  {
+    "id": 6,
+    "question": "The Hassan Tower in Rabat is the minaret of an unfinished mosque. In what century was it built?",
+    "options": ["10th", "12th", "15th", "18th"],
+    "answer": "12th",
+    "explanation": "Construction of the Hassan Tower began in 1195 during the Almohad Caliphate."
+  },
+  {
+    "id": 7,
+    "question": "What is the traditional Moroccan tea primarily made of?",
+    "options": ["Black tea and lemon", "Green tea with mint", "Oolong and honey", "Chamomile and spice"],
+    "answer": "Green tea with mint",
+    "explanation": "Moroccan Mint Tea, also known as 'Maghrebi Mint Tea', is a staple of Moroccan hospitalty made with green tea and fresh mint."
+  },
+  {
+    "id": 8,
+    "question": "The world's oldest continuously operating university is located in Fes. What is its name?",
+    "options": ["Al-Azhar", "Al-Qarawiyyin", "Sorbonne", "Bologna"],
+    "answer": "Al-Qarawiyyin",
+    "explanation": "The University of al-Qarawiyyin in Fes was founded in 859 and is recognized by UNESCO and Guinness World Records as the oldest existing university."
+  },
+  {
+    "id": 9,
+    "question": "Which mountain range stretches across Morocco, Algeria, and Tunisia?",
+    "options": ["Andes", "Himalayas", "Atlas Mountains", "Alps"],
+    "answer": "Atlas Mountains",
+    "explanation": "The Atlas Mountains are a mountain range in North Africa, with the highest peak, Toubkal, located in southwestern Morocco."
+  },
+  {
+    "id": 10,
+    "question": "What is the name of the narrow strait that separates Morocco from Spain?",
+    "options": ["Strait of Hormuz", "Strait of Magellan", "Strait of Gibraltar", "Strait of Malacca"],
+    "answer": "Strait of Gibraltar",
+    "explanation": "The Strait of Gibraltar connects the Atlantic Ocean to the Mediterranean Sea and separates Morocco from Spain."
+  },
+  {
+    "id": 11,
+    "question": "Which of these cities was the first capital of Morocco?",
+    "options": ["Rabat", "Marrakesh", "Fes", "Idris I"],
+    "answer": "Fes",
+    "explanation": "Fes was founded in 789 and served as the capital of Morocco multiple times throughout its history."
+  },
+  {
+    "id": 12,
+    "question": "Majorelle Garden, a famous botanical garden in Marrakesh, was once owned by which fashion designer?",
+    "options": ["Coco Chanel", "Christian Dior", "Yves Saint Laurent", "Karl Lagerfeld"],
+    "answer": "Yves Saint Laurent",
+    "explanation": "Yves Saint Laurent and Pierre Bergé bought the garden in 1980 to save it from real estate development."
+  }
+]

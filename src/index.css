@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-bg-deep: #080809;
+  --color-bg-surface: #121214;
+  --color-accent-gold: #d4af37;
+  --color-accent-gold-muted: rgba(212, 175, 55, 0.15);
+  --color-text-main: #f0f0f0;
+  --color-text-muted: #6b6b6b;
+  --color-border: #1f1f21;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-deep text-text-main antialiased selection:bg-accent-gold selection:text-bg-deep;
+  }
+
+  .leaflet-container {
+    @apply bg-bg-deep border-0 outline-none w-full h-full grayscale-[0.2] brightness-[0.8];
+    touch-action: pan-y !important;
+  }
+  
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    @apply bg-bg-surface/90 text-text-main border border-white/5 rounded-2xl shadow-2xl backdrop-blur-xl;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-1;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/5 rounded-full hover:bg-white/10 transition-colors;
+  }
+}
+
+@layer components {
+  /* Orbital HUD Corner Brackets */
+  .hud-bracket {
+    @apply absolute w-2 h-2 border-accent-gold/40 transition-all duration-300;
+  }
+  .hud-bracket-tl { @apply top-0 left-0 border-t border-l rounded-tl-sm group-hover:border-accent-gold group-hover:w-4 group-hover:h-4; }
+  .hud-bracket-tr { @apply top-0 right-0 border-t border-r rounded-tr-sm group-hover:border-accent-gold group-hover:w-4 group-hover:h-4; }
+  .hud-bracket-bl { @apply bottom-0 left-0 border-b border-l rounded-bl-sm group-hover:border-accent-gold group-hover:w-4 group-hover:h-4; }
+  .hud-bracket-br { @apply bottom-0 right-0 border-b border-r rounded-br-sm group-hover:border-accent-gold group-hover:w-4 group-hover:h-4; }
+
+  /* Border Beam Animation */
+  .border-beam {
+    @apply relative overflow-hidden;
+  }
+  .border-beam::after {
+    content: '';
+    @apply absolute -inset-[2px] bg-gradient-to-r from-transparent via-accent-gold to-transparent opacity-0 transition-opacity duration-500;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    padding: 2px;
+    animation: border-beam-sweep 4s linear infinite;
+  }
+  .border-beam:hover::after {
+    @apply opacity-40;
+  }
+
+  @keyframes border-beam-sweep {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Tactical Micro-Label */
+  .tech-label {
+    @apply text-[7px] font-mono uppercase tracking-[0.3em] text-accent-gold/50;
+  }
+
+  /* Glitch Text Effect */
+.hud-glass {
+  @apply bg-bg-surface/60 backdrop-blur-md border border-white/5 shadow-2xl;
+}
+
+.hud-panel {
+  @apply relative overflow-hidden bg-bg-surface border border-border;
+}
+
+.hud-panel::before {
+  content: "";
+  @apply absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent-gold/40 to-transparent;
+}
+
+/* Radar Ping / User Location Styles */
+.user-marker-container {
+  @apply relative w-8 h-8 flex items-center justify-center;
+}
+
+.user-ping {
+  @apply absolute inset-0 rounded-full bg-cyan-500/30 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite];
+}
+
+.user-ping-secondary {
+  @apply absolute inset-[4px] rounded-full bg-cyan-500/50 animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite];
+}
+
+.user-core {
+  @apply w-2 h-2 bg-cyan-400 rounded-full shadow-[0_0_15px_#22d3ee] z-10;
+}
+
+/* Map Parallax Effects */
+.map-grid-overlay {
+  @apply absolute inset-0 pointer-events-none z-[1];
+  background-image: 
+    linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mix-blend-mode: overlay;
+}
+
+/* Unlocked / Explored Marker Styles */
+@keyframes shimmer-marker {
+  0% { filter: brightness(1) drop-shadow(0 0 5px rgba(212, 175, 55, 0.4)); transform: scale(1); }
+  50% { filter: brightness(1.5) drop-shadow(0 0 15px rgba(212, 175, 55, 0.8)); transform: scale(1.1); }
+  100% { filter: brightness(1) drop-shadow(0 0 5px rgba(212, 175, 55, 0.4)); transform: scale(1); }
+}
+
+.map-marker-unlocked .marker-hex {
+  background: linear-gradient(135deg, #f0d78c 0%, #d4af37 100%);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.map-marker-just-unlocked .marker-hex {
+  animation: shimmer-marker 1s ease-in-out infinite;
+  @apply ring-4 ring-accent-gold/50;
+}
+
+/* Custom Marker styles */
+.map-marker {
+  @apply transition-all duration-500 cursor-pointer flex items-center justify-center pointer-events-auto;
+  z-index: 500 !important;
+}
+
+.marker-hex {
+  @apply w-6 h-6 relative flex items-center justify-center transition-all duration-500;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: linear-gradient(135deg, #d4af37 0%, #aa8a2e 100%);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+.marker-hex::after {
+  content: '';
+  @apply absolute inset-[2px] bg-bg-deep;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.marker-core {
+  @apply w-1.5 h-1.5 bg-accent-gold rounded-full z-10 shadow-[0_0_10px_#d4af37];
+}
+
+.map-marker:hover .marker-hex {
+  @apply scale-110 rotate-90;
+  background: #d4af37;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+}
+
+.map-marker:hover .marker-core {
+  @apply scale-110 bg-white;
+}
+
+.marker-clicked .marker-hex {
+  animation: marker-impact 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 0 5px #d4af37);
+}
+
+@keyframes marker-impact {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.8); }
+  30% { transform: scale(1.8); box-shadow: 0 0 25px 10px rgba(212, 175, 55, 0.4); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+
+.map-marker-active .marker-hex {
+  @apply scale-150 rotate-[30deg];
+  background: #fff;
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.6);
+}
+
+.map-marker-active .marker-core {
+  @apply bg-white animate-pulse;
+}
+
+.marker-pulse {
+  @apply absolute inset-0 rounded-full border border-accent-gold/40 animate-ping;
+}
+
+.marker-pulse-slow {
+  @apply absolute inset-[-8px] rounded-full border border-accent-gold/10 animate-[ping_3s_ease-out_infinite];
+}
+
+.marker-label-new {
+  @apply absolute -top-4 left-1/2 -translate-x-1/2 bg-accent-gold text-bg-deep text-[6px] font-bold px-1.5 py-0.5 rounded-sm tracking-[0.2em] shadow-[0_0_10px_#d4af37] z-20 uppercase animate-bounce;
+}
+
+/* Utility Animations */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.scanline {
+  @apply absolute inset-0 pointer-events-none opacity-[0.02] overflow-hidden z-[9999];
+  background: linear-gradient(to bottom, transparent, #fff 50%, transparent);
+  animation: scanline 8s linear infinite;
+}
+
+.noise-texture {
+  @apply absolute inset-0 pointer-events-none opacity-[0.05] z-[9998];
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Custom Scrollbar Thin */
+.custom-scrollbar::-webkit-scrollbar {
+  @apply w-1;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full hover:bg-white/20;
+}
+
+/* Custom Map Tooltip Styling */
+.custom-map-tooltip {
+  @apply bg-bg-deep/95 backdrop-blur-xl border border-accent-gold/30 rounded-xl px-5 py-3 shadow-[0_20px_40px_rgba(0,0,0,0.6)] transition-all duration-300 pointer-events-none;
+  background: linear-gradient(135deg, rgba(10, 10, 12, 0.98) 0%, rgba(20, 20, 25, 0.98) 100%) !important;
+}
+
+.custom-map-tooltip::before {
+  display: none !important;
+}
+
+.leaflet-tooltip-top:before {
+  @apply border-t-bg-surface/90 border-t-[6px];
+}
+
+.leaflet-tooltip {
+  @apply bg-transparent border-none shadow-none text-left p-0;
+}
+
+/* Tactical Button Base */
+.btn-tactical {
+  @apply relative overflow-hidden flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold tracking-[0.2em] text-[10px] uppercase transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer;
+}
+
+/* Route & Path Highlighting */
+.tactical-route-glow {
+  filter: drop-shadow(0 0 8px rgba(214, 175, 55, 0.8));
+  stroke-linecap: round;
+  transition: all 0.5s ease;
+}
+
+@keyframes dashoffset {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+.tactical-route-dash {
+  animation: dashoffset 20s linear infinite;
+  stroke-dasharray: 10, 20;
+}
+
+/* City Marker Visuals */
+.city-marker-container {
+  @apply relative w-full h-full flex items-center justify-center;
+}
+
+.city-ring {
+  @apply absolute inset-0 rounded-full border border-cyan-400/20 animate-pulse;
+  transform: scale(1.5);
+}
+
+.map-marker-city .marker-hex {
+  @apply w-5 h-5 bg-cyan-900/40 border border-cyan-400/30;
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.2);
+}
+
+.map-marker-city .marker-core {
+  @apply bg-cyan-400 shadow-[0_0_8px_#22d3ee];
+}
+
+.map-marker-city:hover .marker-hex {
+  @apply scale-110 bg-cyan-400 border-white;
+}
+
+.btn-tactical-gold {
+  @apply bg-accent-gold text-bg-deep shadow-xl shadow-accent-gold/20 hover:scale-[1.02] hover:brightness-110;
+}
+
+.btn-tactical-outline {
+  @apply bg-transparent border border-white/10 text-text-muted hover:border-accent-gold/40 hover:text-accent-gold hover:bg-white/[0.02];
+}
+
+/* Shine Effect */
+.hover-shine {
+  @apply relative overflow-hidden;
+}
+
+.hover-shine::after {
+  content: '';
+  @apply absolute inset-0 bg-white/20 -translate-x-full transition-transform duration-1000 ease-out pointer-events-none;
+  transform: skewX(-20deg) translateX(-150%);
+}
+
+.hover-shine:hover::after {
+  @apply translate-x-[250%];
+}
+}

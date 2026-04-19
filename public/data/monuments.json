@@ -1,0 +1,322 @@
+[
+  {
+    "id": "hassan-tower",
+    "cityId": "rabat",
+    "name": "Hassan Tower",
+    "nameAr": "صومعة حسان",
+    "coords": [34.0244, -6.8227],
+    "description": "The Hassan Tower is the minaret of an incomplete mosque in Rabat, Morocco. Built in 1195, it was intended to be the tallest minaret in the Islamic world.",
+    "imageUrl": "https://images.unsplash.com/photo-1549419142-999333355025d?auto=format&fit=crop&q=80&w=800",
+    "modelUrl": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Lantern/glTF-Binary/Lantern.glb",
+    "history": "Commissioned by Abu Yusuf Yaqub al-Mansur in 1195, the tower was intended to be the tallest minaret in the world at the time. Construction stopped after his death in 1199.",
+    "architecture": "A fine example of Almohad architecture, the tower is built of red sandstone and features distinctive poly-lobed arch motifs and intricate sebka patterns on its four faces.",
+    "period": "12th Century (Almohad Dynasty)",
+    "soundCategory": "coastal"
+  },
+  {
+    "id": "hassan-2-mosque",
+    "cityId": "casablanca",
+    "name": "Hassan II Mosque",
+    "nameAr": "مسجد الحسن الثاني",
+    "coords": [33.6085, -7.6326],
+    "description": "The Hassan II Mosque is one of the largest mosques in the world and features the world's second tallest minaret at 210 meters. It sits right by the Atlantic Ocean.",
+    "imageUrl": "https://images.unsplash.com/photo-1563814030635-c33116544060?auto=format&fit=crop&q=80&w=800",
+    "history": "Designed by French architect Michel Pinseau and built by Bouygues, this mosque was completed in 1993 to commemorate the 60th birthday of King Hassan II. It was built using materials from across Morocco.",
+    "architecture": "The mosque blends traditional Moroccan Islamic architecture with modern technology, featuring a retractable roof, heated floors, and a laser bean directing towards Mecca.",
+    "period": "Late 20th Century",
+    "soundCategory": "coastal"
+  },
+  {
+    "id": "koutoubia",
+    "cityId": "marrakesh",
+    "name": "Koutoubia Mosque",
+    "nameAr": "جامع الكتبية",
+    "coords": [31.6238, -7.9936],
+    "description": "The largest mosque in Marrakesh, its minaret was a model for the Giralda in Seville and the Hassan Tower in Rabat.",
+    "imageUrl": "https://images.unsplash.com/photo-1590757648358-00511675f49e?auto=format&fit=crop&q=80&w=800",
+    "history": "Completed under the reign of the Almohad Caliph Yaqub al-Mansur (1184-1199). The name comes from the Arabic 'al-Koutoubiyyin' (booksellers), as dozens of book sellers once crowded the square around its base.",
+    "architecture": "The minaret is made of pink sandstone and stands 77 meters tall. It's decorated with four different ceramic tile patterns (zellige) near the top, a pioneering architectural feature for its time.",
+    "period": "12th Century (Almohad Dynasty)",
+    "soundCategory": "medina"
+  },
+  {
+    "id": "bahia-palace",
+    "cityId": "marrakesh",
+    "name": "Bahia Palace",
+    "nameAr": "قصر الباهية",
+    "coords": [31.6217, -7.9814],
+    "description": "A stunning 19th-century palace showcasing the best of Moroccan architecture, from intricately carved wood to beautiful tiling.",
+    "imageUrl": "https://images.unsplash.com/photo-1610484557765-680fcc685958?auto=format&fit=crop&q=80&w=800",
+    "modelUrl": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AntiqueCamera/glTF-Binary/AntiqueCamera.glb",
+    "history": "Built in the late 19th century by Si Moussa, Grand Vizier of the Sultan, it was later expanded by his son Ba Ahmed. It was intended to be the greatest palace of its time, capturing the essence of the Moroccan style.",
+    "architecture": "A masterpiece of domestic Moroccan architecture, it features expansive courtyards, cedar-wood ceilings painted with floral motifs, and rooms decorated with carved stucco and zellige mosaic tiles.",
+    "period": "19th Century (Alaouite Era)",
+    "soundCategory": "medina"
+  },
+  {
+    "id": "bab-bou-jeloud",
+    "cityId": "fes",
+    "name": "Bab Bou Jeloud",
+    "nameAr": "باب بوجلود",
+    "coords": [34.0617, -4.9847],
+    "description": "The 'Blue Gate' is the grand, iconic entrance to the ancient medina of Fes el Bali.",
+    "imageUrl": "https://images.unsplash.com/photo-1566898863625-f8510c439169?auto=format&fit=crop&q=80&w=800",
+    "soundCategory": "medina"
+  },
+  {
+    "id": "volubilis",
+    "cityId": "meknes",
+    "name": "Volubilis",
+    "nameAr": "وليلي",
+    "coords": [34.0722, -5.5542],
+    "description": "An ancient Roman city, Volubilis is a UNESCO World Heritage site and one of the best-preserved ruins of its kind in North Africa.",
+    "imageUrl": "https://images.unsplash.com/photo-1582031024340-972173549221?auto=format&fit=crop&q=80&w=800",
+    "history": "Originally a Mauretanian settlement in the 3rd century BC, it became a Roman outpost in the 1st century AD. It served as the capital of the Roman province of Mauretania Tingitana.",
+    "architecture": "The site is famous for its exceptionally well-preserved floor mosaics, still in their original locations, including 'The Labors of Hercules' and 'Bacchus on a Chariot drawn by Tigers'.",
+    "period": "3rd Century BC - 11th Century AD",
+    "soundCategory": "nature"
+  },
+  {
+    "id": "ait-ben-haddou",
+    "cityId": "ouarzazate",
+    "name": "Aït Benhaddou",
+    "nameAr": "قصر آيت بن حدو",
+    "coords": [31.0467, -7.1306],
+    "description": "An iconic ksar along the former caravan route between the Sahara and Marrakesh, and a backdrop for many famous films.",
+    "imageUrl": "https://images.unsplash.com/photo-1505051508008-923feaf90180?auto=format&fit=crop&q=80&w=800",
+    "history": "This ksar (fortified village) has been a UNESCO World Heritage site since 1987. It was a major stop for caravans trading salt and gold on the trans-Saharan route.",
+    "architecture": "Constructed entirely from mud-brick (pisé), the site consists of several houses (tighermin) and four small palaces, decorated with typical pre-Saharan motifs.",
+    "period": "17th Century (Traditional Clay Architecture)",
+    "soundCategory": "desert"
+  },
+  {
+    "id": "chefchaouen-medina",
+    "cityId": "chefchaouen",
+    "name": "Chefchaouen Medina",
+    "nameAr": "مدينة شفشاون",
+    "coords": [35.1688, -5.2636],
+    "description": "Famous for its striking blue-washed alleys, this medina was founded in 1471 and is a true gem of northern Morocco.",
+    "imageUrl": "https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&q=80&w=800",
+    "history": "Founded in 1471 as a small fortress by Moulay Ali Ben Moussa Ben Rached El Alami, it served to fight Portuguese invasions. It later became a refuge for Jews and Muslims expelled from Spain.",
+    "architecture": "The medina is characterized by its Andalusian-Moroccan influence, with narrow winding paths, tiled roofs, and houses painted in various shades of blue—a tradition with multiple historical interpretations.",
+    "period": "15th Century (Founded)"
+  },
+  {
+    "id": "hercules-caves",
+    "cityId": "tangier",
+    "name": "Hercules Caves",
+    "nameAr": "مغارة هرقل",
+    "coords": [35.7601, -5.9392],
+    "description": "A complex of natural and man-made caves with a window to the sea, famously shaped like the map of Africa.",
+    "imageUrl": "https://images.unsplash.com/photo-1544413647-b5104938950a?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "saadian-tombs",
+    "cityId": "marrakesh",
+    "name": "Saadian Tombs",
+    "nameAr": "قبور السعديين",
+    "coords": [31.6174, -7.9892],
+    "description": "Rediscovered in 1917, these 16th-century tombs are an architectural masterpiece of the Saadian dynasty.",
+    "imageUrl": "https://images.unsplash.com/photo-1621271169300-34907149a46a?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "essaouira-skala",
+    "cityId": "essaouira",
+    "name": "Skala du Port",
+    "nameAr": "صقالة الميناء",
+    "coords": [31.5100, -9.7725],
+    "description": "An 18th-century sea bastion with defensive walls and cannons offering panoramic views of the Atlantic.",
+    "imageUrl": "https://images.unsplash.com/photo-1591125211534-7a9ed4485ae9?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "ouzoud-falls",
+    "cityId": "azilal",
+    "name": "Ouzoud Waterfalls",
+    "nameAr": "شلالات أوزود",
+    "coords": [32.0152, -6.7189],
+    "description": "Stunning 110-meter waterfalls in the Grand Atlas, surrounded by olive trees and macaque monkeys.",
+    "imageUrl": "https://images.unsplash.com/photo-1536717523277-c992d9d10eab?auto=format&fit=crop&q=80&w=800",
+    "soundCategory": "nature"
+  },
+  {
+    "id": "kasbah-oudayas",
+    "cityId": "rabat",
+    "name": "Oudayas Kasbah",
+    "nameAr": "قصبة الوداية",
+    "coords": [34.0314, -6.8361],
+    "description": "A historic fortress on the Bou Regreg river estuary, known for its whitewashed houses with blue bases.",
+    "imageUrl": "https://images.unsplash.com/photo-1616422285623-13ff0167f966?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "chouara-tannery",
+    "cityId": "fes",
+    "name": "Chouara Tannery",
+    "nameAr": "مدبغة شوارة",
+    "coords": [34.0664, -4.9723],
+    "description": "The largest and oldest of several tanneries in Fes, where leather has been dyed manually for almost a thousand years.",
+    "imageUrl": "https://images.unsplash.com/photo-1579621970795-87faff38317a?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "agadir-oufella",
+    "cityId": "agadir",
+    "name": "Agadir Oufella",
+    "nameAr": "أكادير أوفلا",
+    "coords": [30.4288, -9.6247],
+    "description": "A historic kasbah offering panoramic views of the city and bay, standing as a testament to Agadir's resilience.",
+    "imageUrl": "https://images.unsplash.com/photo-1568249871143-698e6c4333c4?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "ifrane-lion",
+    "cityId": "ifrane",
+    "name": "Lion of Ifrane",
+    "nameAr": "أسد إفران",
+    "coords": [33.5273, -5.1054],
+    "description": "A stone statue of a lion carved by a German prisoner of war in the 1930s, symbolizing the once-native Atlas lions.",
+    "imageUrl": "https://images.unsplash.com/photo-1569336415962-a4bd9f6dfc0f?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "el-badi-palace",
+    "cityId": "marrakesh",
+    "name": "El Badi Palace",
+    "nameAr": "قصر البديع",
+    "coords": [31.6186, -7.9859],
+    "description": "The ruins of a grand 16th-century palace, once known as the 'Incomparable Palace', showcasing Saadian grandeur.",
+    "imageUrl": "https://images.unsplash.com/photo-1533167649158-6d508895b680?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "mausoleum-mohammed-v",
+    "cityId": "rabat",
+    "name": "Mausoleum of Mohammed V",
+    "nameAr": "ضريح محمد الخامس",
+    "coords": [34.0225, -6.8228],
+    "description": "A masterpiece of modern Alaouite dynasty architecture, housing the tombs of the former king and his sons.",
+    "imageUrl": "https://images.unsplash.com/photo-1620076261543-b9588b3f185a?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "jemaa-el-fnaa",
+    "cityId": "marrakesh",
+    "name": "Jemaa el-Fnaa",
+    "nameAr": "جامع الفنا",
+    "coords": [31.6258, -7.9891],
+    "description": "The heart of Marrakesh, a square and market place filled with storytellers, musicians, and food stalls.",
+    "imageUrl": "https://images.unsplash.com/photo-1597212618440-8062a45d0af3?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "todra-gorge",
+    "cityId": "tinghir",
+    "name": "Todra Gorge",
+    "nameAr": "مضيق تودرا",
+    "coords": [31.5917, -5.5972],
+    "description": "A series of limestone river canyons in the eastern part of the High Atlas Mountains.",
+    "imageUrl": "https://images.unsplash.com/photo-1505051508008-923feaf90180?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "erg-chebbi",
+    "cityId": "merzouga",
+    "name": "Erg Chebbi Dunes",
+    "nameAr": "عرق الشبي",
+    "coords": [31.1736, -3.9744],
+    "description": "Stunning wind-blown sand dunes in the Sahara desert, reaching heights of up to 150 meters.",
+    "imageUrl": "https://images.unsplash.com/photo-1505305976870-c0be1cd39939?auto=format&fit=crop&q=80&w=800",
+    "soundCategory": "desert"
+  },
+  {
+    "id": "legzira-beach",
+    "cityId": "sidi-ifni",
+    "name": "Legzira Beach",
+    "nameAr": "شاطئ لكزيرة",
+    "coords": [29.4444, -10.1167],
+    "description": "Famous for its massive natural red stone arches carved into the cliffs by the Atlantic Ocean.",
+    "imageUrl": "https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "cap-spartel",
+    "cityId": "tangier",
+    "name": "Cap Spartel",
+    "nameAr": "كاب سبارطيل",
+    "coords": [35.7925, -5.9236],
+    "description": "The northwestern point of mainland Africa, where the Atlantic Ocean meets the Mediterranean Sea.",
+    "imageUrl": "https://images.unsplash.com/photo-1544413647-b5104938950a?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "al-attarine-madrasa",
+    "cityId": "fes",
+    "name": "Al-Attarine Madrasa",
+    "nameAr": "مدرسة العطارين",
+    "coords": [34.0642, -4.9739],
+    "description": "A beautiful 14th-century madrasa in the Fes medina, renowned for its intricate marinid architecture.",
+    "imageUrl": "https://images.unsplash.com/photo-1579621970795-87faff38317a?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "spanish-mosque",
+    "cityId": "chefchaouen",
+    "name": "Spanish Mosque",
+    "nameAr": "المسجد الإسباني",
+    "coords": [35.1652, -5.2573],
+    "description": "An abandoned mosque on a hill overlooking Chefchaouen, offers the most iconic panoramic view of the blue city.",
+    "imageUrl": "https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "kasbah-taourirt",
+    "cityId": "ouarzazate",
+    "name": "Kasbah of Taourirt",
+    "nameAr": "قصبة تاوريرت",
+    "coords": [30.9201, -6.8995],
+    "description": "One of the most impressive kasbahs in Morocco, the former residence of the Glaoui family.",
+    "imageUrl": "https://images.unsplash.com/photo-1505305976870-c0be1cd39939?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "moulay-idriss",
+    "cityId": "zerhoun",
+    "name": "Moulay Idriss Zerhoun",
+    "nameAr": "مولاي إدريس زرهون",
+    "coords": [34.0531, -5.5256],
+    "description": "A holy town spread over two hills at the base of Mount Zerhoun, birthplace of the Idrisid dynasty.",
+    "imageUrl": "https://images.unsplash.com/photo-1582031024340-972173549221?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "borj-nord",
+    "cityId": "fes",
+    "name": "Borj Nord",
+    "nameAr": "برج الشمال",
+    "coords": [34.0689, -4.9867],
+    "description": "A 16th-century fortress and saadian weaponry museum overlooking the medina of Fes el Bali.",
+    "imageUrl": "https://images.unsplash.com/photo-1566898863625-f8510c439169?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "lalla-takerkoust",
+    "cityId": "marrakesh",
+    "name": "Lalla Takerkoust Lake",
+    "nameAr": "بحيرة لالة تاكركوست",
+    "coords": [31.3583, -8.125],
+    "description": "A man-made lake at the foot of the High Atlas mountains, popular for water sports and stunning sunset views.",
+    "imageUrl": "https://images.unsplash.com/photo-1597212618440-8062a45d0af3?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "tetouan-medina",
+    "cityId": "tetouan",
+    "name": "Medina of Tétouan",
+    "nameAr": "مدينة تطوان",
+    "coords": [35.5711, -5.3697],
+    "description": "A UNESCO World Heritage site, one of the best-preserved and most complete examples of an Andalusian-Moroccan medina.",
+    "imageUrl": "https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "mazagan-city",
+    "cityId": "el-jadida",
+    "name": "Portuguese City of Mazagan",
+    "nameAr": "الحي البرتغالي بالجديدة",
+    "coords": [33.2547, -8.5025],
+    "description": "A former Portuguese fortification on the Atlantic coast, featuring a famous Manueline-style cistern.",
+    "imageUrl": "https://images.unsplash.com/photo-1591125211534-7a9ed4485ae9?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": "dades-valley",
+    "cityId": "dades",
+    "name": "Dades Valley",
+    "nameAr": "وادي دادس",
+    "coords": [31.4289, -5.9753],
+    "description": "Famous for its stunning rock formations and the winding 'Monkey Fingers' road through the Atlas mountains.",
+    "imageUrl": "https://images.unsplash.com/photo-1505051508008-923feaf90180?auto=format&fit=crop&q=80&w=800"
+  }
+]

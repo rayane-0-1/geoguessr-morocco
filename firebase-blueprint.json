@@ -1,0 +1,24 @@
+{
+  "entities": {
+    "LeaderboardEntry": {
+      "title": "Leaderboard Entry",
+      "description": "Represents a user's best score and game statistics.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The unique Firebase UID of the user." },
+        "username": { "type": "string", "description": "The display name of the user." },
+        "score": { "type": "integer", "description": "The highest score achieved by the user." },
+        "gamesPlayed": { "type": "integer", "description": "Total number of game sessions completed." },
+        "lastUpdated": { "type": "integer", "description": "Timestamp (epoch) of the last score update." },
+        "photoURL": { "type": "string", "description": "Optional profile picture URL." }
+      },
+      "required": ["userId", "username", "score", "lastUpdated"]
+    }
+  },
+  "firestore": {
+    "/leaderboard/{userId}": {
+      "schema": "LeaderboardEntry",
+      "description": "Global rankings based on highest score per user."
+    }
+  }
+}
