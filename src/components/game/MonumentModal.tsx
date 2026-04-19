@@ -7,6 +7,8 @@ import "@google/model-viewer";
 import { Viewer } from 'mapillary-js';
 import 'mapillary-js/dist/mapillary.css';
 
+import { assets } from "../../assets";
+
 const ModelViewerComponent = "model-viewer" as any;
 
 // Sub-component for Mapillary because it needs its own container lifecycle
@@ -197,7 +199,7 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ monument, onClose,
                 className="w-full h-full"
               >
                 <img 
-                  src={monument.imageUrl} 
+                  src={monument.imageUrl || assets.placeholders.monument} 
                   alt={monument.name} 
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
