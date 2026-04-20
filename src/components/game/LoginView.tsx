@@ -3,20 +3,37 @@ import { motion } from "motion/react";
 import { Shield, Lock, Terminal, Fingerprint, ChevronRight } from "lucide-react";
 import { auth, googleProvider } from "../../lib/firebase";
 import { signInWithPopup } from "firebase/auth";
+import { cn } from "../../lib/utils";
 
-export const LoginView: React.FC = () => {
+interface LoginViewProps {
+  lang?: "ar" | "en";
+}
+
+export const LoginView: React.FC<LoginViewProps> = ({ lang = "en" }) => {
   const [isVerifying, setIsVerifying] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  const isAr = lang === "ar";
+  const t = {
+    title: isAr ? "التحقق من الهوية" : "IDENTITY VERIFICATION",
+    subtitle: isAr ? "وحدة تحكم الاستخبارات المغربية المركزية" : "Central Moroccan Intelligence Console",
+    encrypting: isAr ? "تشفير..." : "ENCRYPTING...",
+    authorize: isAr ? "تفويض باستخدام Google" : "AUTHORIZE WITH GOOGLE",
+    syncText: isAr ? "سجل الدخول لمزامنة تقدم الاكتشاف والتصنيفات العالمية" : "Sign in to sync discovery progress & global rankings",
+    protocol: isAr ? "بروتوكول" : "Protocol",
+    terminal: isAr ? "محطة" : "Terminal",
+    verifying: isAr ? "جاري التحقق من الاعتمادات" : "Verifying Credentials",
+    authFailed: isAr ? "فشل المصادقة: تم رفض الوصول" : "AUTHENTICATION_FAILED: ACCESS_DENIED"
+  };
 
   const handleGoogleLogin = async () => {
     try {
       setIsVerifying(true);
       setError(null);
       await signInWithPopup(auth, googleProvider);
-      // Auth state change will handle navigation in App.tsx
     } catch (err) {
       console.error("Auth error:", err);
-      setError("AUTHENTICATION_FAILED: ACCESS_DENIED");
+      setError(t.authFailed);
       setIsVerifying(false);
     }
   };
@@ -54,10 +71,10 @@ export const LoginView: React.FC = () => {
 
           <div className="flex flex-col gap-2">
             <h1 className="text-2xl font-display font-bold text-text-main tracking-tight group-hover:text-accent-gold transition-colors duration-500">
-              IDENTITY VERIFICATION
+              {t.title}
             </h1>
             <p className="text-[10px] font-mono text-text-muted uppercase tracking-[0.3em]">
-              Central Moroccan Intelligence Console
+              {t.subtitle}
             </p>
           </div>
 
@@ -76,35 +93,35 @@ export const LoginView: React.FC = () => {
               <div className="flex items-center justify-center gap-2">
                 {isVerifying ? (
                   <>
-                    <span className="animate-pulse tracking-widest text-xs uppercase">ENCRYPTING...</span>
+                    <span className="animate-pulse tracking-widest text-xs uppercase">{t.encrypting}</span>
                   </>
                 ) : (
-                  <>
+                  <div className={cn("flex items-center justify-center gap-2 w-full", isAr && "flex-row-reverse")}>
                     <img 
                       src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
                       alt="Google" 
-                      className="w-4 h-4 mr-2"
+                      className="w-4 h-4 ml-0 mr-0"
                       referrerPolicy="no-referrer"
                     />
-                    <span className="tracking-widest text-xs uppercase text-bg-deep font-bold">AUTHORIZE WITH GOOGLE</span>
-                    <ChevronRight size={16} />
-                  </>
+                    <span className="tracking-widest text-xs uppercase text-bg-deep font-bold">{t.authorize}</span>
+                    <ChevronRight size={16} className={cn(isAr && "rotate-180")} />
+                  </div>
                 )}
               </div>
             </button>
 
             <p className="text-[9px] text-text-muted text-center uppercase tracking-widest opacity-60">
-              Sign in to sync discovery progress & global rankings
+              {t.syncText}
             </p>
           </div>
 
-          <div className="flex justify-between w-full mt-4 border-t border-white/5 pt-4 opacity-40">
-            <div className="flex flex-col items-start gap-1">
-              <span className="text-[7px] font-mono uppercase tracking-widest text-text-muted">Protocol</span>
+          <div className={cn("flex justify-between w-full mt-4 border-t border-white/5 pt-4 opacity-40", isAr && "flex-row-reverse")}>
+            <div className={cn("flex flex-col gap-1", isAr ? "items-end" : "items-start")}>
+              <span className="text-[7px] font-mono uppercase tracking-widest text-text-muted">{t.protocol}</span>
               <span className="text-[8px] font-mono text-text-main">SSL-RSA-2048</span>
             </div>
-            <div className="flex flex-col items-end gap-1">
-              <span className="text-[7px] font-mono uppercase tracking-widest text-text-muted">Terminal</span>
+            <div className={cn("flex flex-col gap-1", isAr ? "items-start" : "items-end")}>
+              <span className="text-[7px] font-mono uppercase tracking-widest text-text-muted">{t.terminal}</span>
               <span className="text-[8px] font-mono text-text-main">LOC-MA-88</span>
             </div>
           </div>
@@ -131,7 +148,7 @@ export const LoginView: React.FC = () => {
             transition={{ duration: 1, repeat: Infinity }}
             className="text-[10px] font-mono text-accent-gold uppercase tracking-[0.5em]"
           >
-            Verifying Credentials
+            {t.verifying}
           </motion.p>
         </motion.div>
       )}

@@ -42,7 +42,12 @@ export const Layout: React.FC<LayoutProps> = ({
     tacticalActive: isAr ? "التحدي التكتيكي نشط" : "Tactical Challenge Active",
     explore: isAr ? "استكشف" : "Explore",
     quiz: isAr ? "اختبار" : "Quiz",
-    defi: isAr ? "تحدي" : "Défi"
+    defi: isAr ? "تحدي" : "Défi",
+    rank: isAr ? "الترتيب" : "RANK",
+    logout: isAr ? "تسجيل الخروج" : "LOGOUT",
+    info: isAr ? "معلومات" : "INFO",
+    telemetry: isAr ? "بيانات الموضع" : "Lat: 31.7917 / Lon: -7.0926",
+    sync: isAr ? "مزامنة_البيانات_المدارية" : "Orbital_Data_Sync_Active"
   };
 
   const filteredItems = React.useMemo(() => {
@@ -64,9 +69,9 @@ export const Layout: React.FC<LayoutProps> = ({
 
   return (
     <div className="flex min-h-screen bg-bg-deep text-text-main font-sans selection:bg-accent-gold selection:text-bg-deep" dir={isAr ? "rtl" : "ltr"}>
-      {/* Navigation Sidebar */}
+      {/* Navigation Sidebar (Desktop) */}
       <aside className={cn(
-        "bg-bg-surface border-border flex flex-col items-center py-8 gap-8 z-50 w-[80px] shrink-0 sticky top-0 h-screen",
+        "hidden md:flex bg-bg-surface border-border flex-col items-center py-8 gap-8 z-50 w-[80px] shrink-0 sticky top-0 h-screen",
         isAr ? "border-l" : "border-r"
       )}>
         <div 
@@ -106,9 +111,25 @@ export const Layout: React.FC<LayoutProps> = ({
         </nav>
 
         <div className="mt-auto flex flex-col gap-6 items-center">
+          <button 
+            onClick={onToggleLang}
+            className="group relative flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-500 border border-border text-accent-gold hover:bg-accent-gold hover:text-bg-deep shadow-lg hover:shadow-accent-gold/20"
+            title={isAr ? "Switch to English" : "تغيير للغة العربية"}
+          >
+            <Languages size={18} className="group-hover:rotate-12 transition-transform" />
+            <div className={cn(
+              "absolute flex items-center gap-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300",
+              isAr ? "left-14 -translate-x-2 group-hover:translate-x-0" : "right-14 translate-x-2 group-hover:translate-x-0 flex-row-reverse"
+            )}>
+              <span className="px-3 py-1.5 bg-bg-surface border border-border text-accent-gold text-[9px] font-bold tracking-[0.2em] rounded-lg shadow-2xl whitespace-nowrap">
+                {isAr ? "ENGLISH" : "العربية"}
+              </span>
+            </div>
+          </button>
+
           <NavIcon 
             icon={<Trophy size={18} />} 
-            label={isAr ? "الترتيب" : "RANK"} 
+            label={t.rank} 
             active={activeMode === "leaderboard"} 
             onClick={() => onModeChange("leaderboard")} 
             isAr={isAr}
@@ -117,16 +138,61 @@ export const Layout: React.FC<LayoutProps> = ({
             <button 
               onClick={() => auth.signOut()}
               className="text-text-muted hover:text-rose-500 transition-colors p-2 border border-border rounded-lg group"
-              title="LOGOUT"
+              title={t.logout}
             >
               <LogOut size={16} className="group-hover:translate-x-1 transition-transform" />
             </button>
           )}
-          <button className="text-text-muted hover:text-accent-gold transition-colors p-2 border border-border rounded-lg">
+          <button 
+            className="text-text-muted hover:text-accent-gold transition-colors p-2 border border-border rounded-lg"
+            title={t.info}
+          >
             <Info size={16} />
           </button>
         </div>
       </aside>
+
+      {/* Mobile Bottom Navigation */}
+      <nav className="md:hidden fixed bottom-6 left-6 right-6 z-50 flex items-center justify-around bg-bg-surface/80 backdrop-blur-2xl border border-border px-4 py-3 rounded-[24px] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <NavIcon 
+          icon={<MapIcon size={18} />} 
+          label={t.explore} 
+          active={activeMode === "exploration"} 
+          onClick={() => onModeChange("exploration")} 
+          isAr={isAr}
+        />
+        <NavIcon 
+          icon={<HelpCircle size={18} />} 
+          label={t.quiz} 
+          active={activeMode === "quiz"} 
+          onClick={() => onModeChange("quiz")} 
+          isAr={isAr}
+        />
+        <div className="w-10 h-10 bg-accent-gold rounded-xl flex items-center justify-center p-2 shadow-[0_0_20px_rgba(212,175,55,0.4)]" onClick={() => onModeChange("idle")}>
+           <div className="w-1.5 h-1.5 bg-bg-deep rounded-full animate-pulse" />
+        </div>
+        <NavIcon 
+          icon={<Clock size={18} />} 
+          label={t.defi} 
+          active={activeMode === "defi"} 
+          onClick={() => onModeChange("defi")} 
+          isAr={isAr}
+        />
+        <button 
+          onClick={onToggleLang}
+          className="flex flex-col items-center justify-center p-2 rounded-xl transition-all border border-border text-accent-gold"
+        >
+          <Languages size={14} />
+          <span className="text-[7px] font-bold mt-1 uppercase">{isAr ? "EN" : "AR"}</span>
+        </button>
+        <NavIcon 
+          icon={<Trophy size={18} />} 
+          label={t.rank} 
+          active={activeMode === "leaderboard"} 
+          onClick={() => onModeChange("leaderboard")} 
+          isAr={isAr}
+        />
+      </nav>
 
       {/* Main Content (Map/Game) + HUD Header */}
       <main className="relative flex-1 flex flex-col min-w-0 pointer-events-auto min-h-screen">
@@ -135,14 +201,14 @@ export const Layout: React.FC<LayoutProps> = ({
         
         {/* HUD Header Pills */}
         <header className={cn(
-          "absolute top-6 left-6 right-6 flex justify-between items-start z-40 pointer-events-none",
-          isAr ? "flex-row-reverse" : "flex-row"
+          "absolute top-4 md:top-6 left-4 md:left-6 right-4 md:right-6 flex flex-col md:flex-row gap-4 justify-between items-start z-40 pointer-events-none",
+          isAr ? "md:flex-row-reverse" : "md:flex-row"
         )}>
-          <div className={cn("flex flex-col gap-4 pointer-events-auto", isAr ? "items-end" : "items-start")}>
+          <div className={cn("flex flex-col gap-3 md:gap-4 pointer-events-auto w-full md:w-auto", isAr ? "items-end" : "items-start")}>
             <motion.div 
               initial={{ y: -20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              className="relative flex items-center gap-4 bg-bg-deep/40 backdrop-blur-xl border border-white/10 px-6 py-3 rounded-2xl shadow-2xl group cursor-default"
+              className="relative flex items-center justify-between md:justify-start gap-4 bg-bg-deep/40 backdrop-blur-xl border border-white/10 px-4 md:px-6 py-2.5 md:py-3 rounded-2xl shadow-2xl group cursor-default w-full md:w-auto"
             >
               <div className="hud-bracket hud-bracket-tl" />
               <div className="hud-bracket hud-bracket-tr" />
@@ -167,10 +233,10 @@ export const Layout: React.FC<LayoutProps> = ({
             </motion.div>
 
             {/* Search Interface */}
-            <div className="relative w-64 md:w-80 group">
+            <div className="relative w-full md:w-80 group">
               <div className={cn(
                 "flex items-center gap-3 bg-bg-deep/40 backdrop-blur-xl border border-white/10 px-4 py-2.5 rounded-2xl transition-all duration-300 shadow-2xl relative",
-                isSearchFocused ? "border-accent-gold/50 ring-1 ring-accent-gold/20 w-full" : "w-48 opacity-80",
+                isSearchFocused ? "border-accent-gold/50 ring-1 ring-accent-gold/20 w-full" : "w-full md:w-48 opacity-80",
                 isAr ? "flex-row-reverse" : "flex-row"
               )}>
                 <div className="hud-bracket hud-bracket-tl" />
@@ -247,7 +313,7 @@ export const Layout: React.FC<LayoutProps> = ({
                       })}
                     </div>
                     <div className="bg-accent-gold/5 py-1.5 px-4 border-t border-white/5 text-center">
-                      <span className="text-[7px] font-mono text-accent-gold/40 uppercase tracking-[0.2em]">Orbital_Data_Sync_Active</span>
+                      <span className="text-[7px] font-mono text-accent-gold/40 uppercase tracking-[0.2em]">{t.sync}</span>
                     </div>
                   </motion.div>
                 )}
@@ -266,8 +332,8 @@ export const Layout: React.FC<LayoutProps> = ({
             )}
           </div>
 
-          <div className={cn("pointer-events-auto flex flex-col gap-3", isAr ? "items-start" : "items-end")}>
-            <div className="bg-bg-deep/40 backdrop-blur-xl border border-white/10 p-1 rounded-2xl flex gap-1 shadow-2xl">
+          <div className={cn("pointer-events-auto flex flex-col gap-2 md:gap-3 w-full md:w-auto", isAr ? "items-start" : "items-end")}>
+            <div className="hidden md:flex bg-bg-deep/40 backdrop-blur-xl border border-white/10 p-1 rounded-2xl gap-1 shadow-2xl">
               <ModeToggle 
                 active={activeMode === "exploration"} 
                 onClick={() => onModeChange("exploration")}
@@ -284,14 +350,14 @@ export const Layout: React.FC<LayoutProps> = ({
                 label={t.defi}
               />
             </div>
-            <div className="text-[9px] font-mono text-text-muted tracking-widest uppercase px-3 py-1 bg-white/5 rounded-full border border-white/5">
-              Lat: 31.7917 / Lon: -7.0926
+            <div className="text-[8px] md:text-[9px] font-mono text-text-muted tracking-widest uppercase px-3 py-1 bg-white/5 rounded-full border border-white/5 self-end md:self-auto">
+              {t.telemetry}
             </div>
           </div>
         </header>
 
         {/* Game View */}
-        <div className="flex-1 relative min-h-0 container mx-auto p-6 md:p-10 pt-24 md:pt-32">
+        <div className="flex-1 relative min-h-0 container mx-auto p-4 md:p-10 pt-48 md:pt-32 pb-32 md:pb-10">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeMode}

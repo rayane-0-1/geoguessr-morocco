@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { audioService } from "../../services/audioService";
 import { CheckCircle2, ShieldCheck, Zap } from "lucide-react";
 import confetti from "canvas-confetti";
+import { cn } from "../../lib/utils";
 
 interface ExplorationModeProps {
   monuments: Monument[];
@@ -102,10 +103,18 @@ export const ExplorationMode: React.FC<ExplorationModeProps> = ({
   };
 
   const unlockedMonument = justUnlockedId ? monuments.find(m => m.id === justUnlockedId) : null;
+  const isAr = lang === "ar";
+  
+  const t = {
+    toastHeader: isAr ? "تمت إعادة بناء المعلومات" : "Intelligence Reconstructed",
+    toastSync: isAr ? "بنجاح Sync تم" : "Successfully Synced",
+    xpGain: isAr ? "+100 XP تم اكتساب البيانات" : "+100 XP DATA_GAIN ACQUIRED",
+    sigLocked: isAr ? "تم القفل" : "SIG_LKD",
+  };
 
   return (
-    <div className="flex-1 flex gap-6 relative p-6">
-      <div className="flex-1 rounded-3xl overflow-hidden shadow-2xl relative border border-border">
+    <div className="flex-1 flex flex-col md:flex-row gap-4 md:gap-6 relative p-4 md:p-6 overflow-hidden">
+      <div className="flex-1 rounded-3xl overflow-hidden shadow-2xl relative border border-border min-h-[300px] md:min-h-0">
         <MapComponent 
           monuments={monuments} 
           cities={cities} 
@@ -138,9 +147,12 @@ export const ExplorationMode: React.FC<ExplorationModeProps> = ({
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 1.1 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-50 pointer-events-none"
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-50 pointer-events-none w-[90%] max-w-xl"
           >
-            <div className="bg-bg-deep/80 backdrop-blur-2xl border border-accent-gold/50 px-8 py-4 rounded-3xl shadow-[0_0_50px_rgba(212,175,55,0.2)] flex items-center gap-6 overflow-hidden relative">
+            <div className={cn(
+              "bg-bg-deep/80 backdrop-blur-2xl border border-accent-gold/50 px-8 py-4 rounded-3xl shadow-[0_0_50px_rgba(212,175,55,0.2)] flex items-center gap-6 overflow-hidden relative",
+              isAr ? "flex-row-reverse text-right" : "flex-row text-left"
+            )}>
               <div className="absolute inset-0 bg-gradient-to-r from-accent-gold/5 via-transparent to-accent-gold/5" />
               <div className="scanline opacity-[0.05]" />
               
@@ -160,22 +172,22 @@ export const ExplorationMode: React.FC<ExplorationModeProps> = ({
                 </div>
               </div>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col flex-1">
                 <span className="text-[10px] font-mono font-bold tracking-[0.4em] text-accent-gold uppercase mb-1">
-                  Intelligence Reconstructed
+                  {t.toastHeader}
                 </span>
                 <h3 className="text-xl font-display font-medium text-text-main uppercase tracking-tight">
-                  {unlockedMonument.name} Successfully Synced
+                  {isAr ? unlockedMonument.nameAr || unlockedMonument.name : unlockedMonument.name} {t.toastSync}
                 </h3>
-                <div className="flex items-center gap-2 mt-2">
+                <div className={cn("flex items-center gap-2 mt-2", isAr && "flex-row-reverse")}>
                   <div className="h-[1px] w-8 bg-accent-gold/30" />
-                  <span className="text-[9px] font-mono text-text-muted uppercase tracking-widest">+100 XP DATA_GAIN ACQUIRED</span>
+                  <span className="text-[9px] font-mono text-text-muted uppercase tracking-widest">{t.xpGain}</span>
                 </div>
               </div>
 
-              <div className="ml-4 pl-6 border-l border-white/10 flex flex-col items-center">
+              <div className={cn("ml-4 pl-6 border-white/10 flex flex-col items-center", isAr ? "border-r pr-6 ml-0 pl-0" : "border-l pl-6")}>
                  <CheckCircle2 size={24} className="text-accent-gold animate-pulse" />
-                 <span className="text-[8px] font-mono text-accent-gold/40 mt-1">SIG_LKD</span>
+                 <span className="text-[8px] font-mono text-accent-gold/40 mt-1">{t.sigLocked}</span>
               </div>
             </div>
           </motion.div>

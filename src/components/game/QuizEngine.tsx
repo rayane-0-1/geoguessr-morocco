@@ -35,6 +35,47 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({ monuments, cities, onCom
     startTime: 0,
   });
 
+  const isAr = lang === "ar";
+  const t = {
+    loadingTitle: isAr ? "توليف المعلومات" : "Synthesizing Intelligence",
+    loadingDesc: isAr ? "مراجعة الأرشيفات التاريخية ومجموعات البيانات الثقافية لتوليد تحدٍ فريد..." : "Cross-referencing historical archives and cultural datasets for unique challenge generation...",
+    selectTitle: isAr ? "اختر مستوى الكفاءة" : "Select Proficiency",
+    selectDesc: isAr ? "طابق معرفتك مع التحدي" : "Match your knowledge to the challenge",
+    easy: isAr ? "سهل / مبتدئ" : "EASY / INITIATE",
+    medium: isAr ? "متوسط / محلل" : "MEDIUM / ANALYST",
+    hard: isAr ? "صعب / قائد" : "HARD / COMMANDER",
+    questions: isAr ? "أسئلة" : "Questions",
+    seconds: isAr ? "ثانية" : "Seconds Limit",
+    bonus: isAr ? "مكافأة" : "BONUS",
+    disconnect: isAr ? "فصل الواجهة" : "Disconnect Interface",
+    score: isAr ? "النتيجة" : "SCORE",
+    protocol: isAr ? "بروتوكول" : "Protocol",
+    questionOf: isAr ? "سؤال" : "QUESTION",
+    of: isAr ? "من" : "OF",
+    nextAnalysis: isAr ? "التحليل التالي" : "Next Analysis",
+    showResults: isAr ? "عرض النتائج" : "Show Results",
+    timeExpired: isAr ? "انتهى الوقت" : "Time Expired",
+    quizEvaluated: isAr ? "تم تقييم الاختبار" : "Quiz Evaluated",
+    forceTerminated: isAr ? "تم إنهاء الجلسة قسراً" : "Session Forcefully Terminated",
+    profConfirmed: isAr ? "تم تأكيد الكفاءة التاريخية" : "Historical Proficiency Confirmed",
+    finalPoints: isAr ? "نقاط التقييم النهائية" : "Final Evaluation Points",
+    nextLevel: isAr ? "المستوى التالي (متكيف)" : "Next Level (Adaptive)",
+    returnHome: isAr ? "العودة إلى مركز التحكم" : "Return to Control Center",
+    categoryGeography: isAr ? "الجغرافيا" : "GEOGRAPHY",
+    categoryHistory: isAr ? "التاريخ" : "HISTORY",
+    categoryCulture: isAr ? "الثقافة" : "CULTURE",
+    categoryGeneral: isAr ? "عام" : "GENERAL"
+  };
+
+  const getCategoryLabel = (cat?: string) => {
+    switch (cat) {
+      case "geography": return t.categoryGeography;
+      case "history": return t.categoryHistory;
+      case "culture": return t.categoryCulture;
+      default: return t.categoryGeneral;
+    }
+  };
+
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
   // Auto scroll to top on question change
@@ -127,10 +168,10 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({ monuments, cities, onCom
         <Loader2 className="animate-spin text-accent-gold mb-6" size={48} />
         <div className="flex flex-col items-center gap-2">
           <span className="text-[10px] font-mono font-bold tracking-[0.4em] text-accent-gold uppercase animate-pulse">
-            Synthesizing Intelligence
+            {t.loadingTitle}
           </span>
           <p className="text-[9px] text-text-muted uppercase tracking-widest text-center max-w-xs">
-            Cross-referencing historical archives and cultural datasets for unique challenge generation...
+            {t.loadingDesc}
           </p>
         </div>
       </div>
@@ -149,29 +190,30 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({ monuments, cities, onCom
             <BrainCircuit size={32} className="text-accent-gold group-hover:scale-110 transition-transform" />
           </div>
           <h2 className="text-4xl font-serif text-text-main text-center mb-2 leading-tight uppercase tracking-tight">
-            {lang === "ar" ? "اختر مستوى Proficiency" : "Select Proficiency"}
+            {t.selectTitle}
           </h2>
           <p className="text-text-muted text-[10px] uppercase tracking-[0.3em] font-mono mb-12">
-            {lang === "ar" ? "طابق معرفتك مع التحدي" : "Match your knowledge to the challenge"}
+            {t.selectDesc}
           </p>
 
           <div className="grid grid-cols-1 gap-4 w-full">
             {(Object.keys(DIFFICULTY_SETTINGS) as Difficulty[]).map((level) => {
               const s = DIFFICULTY_SETTINGS[level];
+              const label = level === "easy" ? t.easy : level === "medium" ? t.medium : t.hard;
               return (
                 <button
                   key={level}
                   onClick={() => loadQuestions(level)}
                   className="group flex items-center justify-between p-6 bg-bg-deep/50 border border-border rounded-2xl hover:border-accent-gold hover:scale-[1.02] transition-all text-left hover-shine"
                 >
-                  <div>
-                    <h3 className="text-xl font-serif text-text-main group-hover:text-accent-gold transition-colors">{s.label}</h3>
+                  <div className={cn(isAr && "text-right")}>
+                    <h3 className="text-xl font-serif text-text-main group-hover:text-accent-gold transition-colors">{label}</h3>
                     <p className="text-[9px] text-text-muted uppercase tracking-widest mt-1">
-                      {s.questions} Questions • {s.time} Seconds Limit
+                      {s.questions} {t.questions} • {s.time} {t.seconds}
                     </p>
                   </div>
                   <div className="text-[10px] font-mono text-accent-gold opacity-40 group-hover:opacity-100 transition-opacity">
-                    x{s.multiplier.toFixed(1)} BONUS
+                    x{s.multiplier.toFixed(1)} {t.bonus}
                   </div>
                 </button>
               );
@@ -182,8 +224,8 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({ monuments, cities, onCom
             onClick={onExit}
             className="mt-12 text-[10px] font-bold uppercase tracking-widest text-text-muted hover:text-text-main transition-colors flex items-center gap-2"
           >
-            <motion.div whileHover={{ x: -3 }} transition={{ type: "spring", stiffness: 400 }}>
-              ← Disconnect Interface
+            <motion.div whileHover={{ x: isAr ? 3 : -3 }} transition={{ type: "spring", stiffness: 400 }}>
+              {isAr ? "Disconnect Interface →" : "← " + t.disconnect}
             </motion.div>
           </button>
         </div>
@@ -196,20 +238,20 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({ monuments, cities, onCom
   return (
     <div 
       ref={scrollRef}
-      className="flex-1 flex flex-col items-center p-8 bg-bg-surface border border-border rounded-3xl shadow-2xl overflow-y-auto custom-scrollbar relative"
+      className="flex-1 flex flex-col items-center p-4 md:p-8 bg-bg-surface border border-border rounded-3xl shadow-2xl overflow-y-auto custom-scrollbar relative"
     >
       {/* HUD Header */}
       {!gameOver && (
-        <div className="absolute top-0 left-0 w-full p-8 flex items-center justify-between pointer-events-none">
-          <div className="flex items-center gap-4 bg-bg-deep/40 backdrop-blur-md px-4 py-2 rounded-xl border border-border/50">
-            <Timer size={14} className={cn(timeLeft < 15 ? "text-rose-500 animate-pulse" : "text-accent-gold")} />
-            <span className={cn("text-xs font-mono font-bold w-12", timeLeft < 15 ? "text-rose-500" : "text-text-main")}>
+        <div className="absolute top-0 left-0 w-full p-4 md:p-8 flex items-center justify-between pointer-events-none z-10">
+          <div className="flex items-center gap-2 md:gap-4 bg-bg-deep/40 backdrop-blur-md px-3 md:px-4 py-1.5 md:py-2 rounded-xl border border-border/50">
+            <Timer size={12} className={cn(timeLeft < 15 ? "text-rose-500 animate-pulse" : "text-accent-gold")} />
+            <span className={cn("text-[10px] md:text-xs font-mono font-bold w-10 md:w-12", timeLeft < 15 ? "text-rose-500" : "text-text-main")}>
               {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
             </span>
           </div>
 
-          <div className="flex items-center gap-4 bg-bg-deep/40 backdrop-blur-md px-4 py-2 rounded-xl border border-border/50">
-            <span className="text-[10px] font-mono tracking-tighter text-text-muted">SCORE: {score}</span>
+          <div className={cn("flex items-center gap-4 bg-bg-deep/40 backdrop-blur-md px-4 py-2 rounded-xl border border-border/50", isAr && "flex-row-reverse")}>
+            <span className="text-[10px] font-mono tracking-tighter text-text-muted">{t.score}: {score}</span>
           </div>
         </div>
       )}
@@ -229,23 +271,26 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({ monuments, cities, onCom
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-bold tracking-widest text-accent-gold uppercase flex items-center gap-2">
-                  {difficulty && DIFFICULTY_SETTINGS[difficulty].label} Protocol
+                  {(difficulty && (difficulty === "easy" ? t.easy : difficulty === "medium" ? t.medium : t.hard))} {t.protocol}
                   {currentQuestion.source === "AI" && <Sparkles size={10} className="text-accent-gold animate-pulse" />}
                 </span>
-                <span className="text-text-muted text-[10px] font-mono tracking-tighter uppercase flex items-center gap-2">
-                  QUESTION {currentIndex + 1} OF {questions.length}
+                <span className={cn("text-text-muted text-[10px] font-mono tracking-tighter uppercase flex items-center gap-2", isAr && "flex-row-reverse")}>
+                  {t.questionOf} {currentIndex + 1} {t.of} {questions.length}
                   <span className="opacity-30">•</span>
-                  <span className="flex items-center gap-1">
-                    {currentQuestion.category === "geography" && <Globe size={10} />}
-                    {currentQuestion.category === "history" && <History size={10} />}
-                    {currentQuestion.category === "culture" && <Palette size={10} />}
-                    {currentQuestion.category || "General"}
+                  <span className="flex items-center gap-1.5 px-2 py-0.5 bg-bg-deep/50 rounded-full border border-border/50">
+                    {currentQuestion.category === "geography" && <Globe size={10} className="text-blue-400/70" />}
+                    {currentQuestion.category === "history" && <History size={10} className="text-amber-400/70" />}
+                    {currentQuestion.category === "culture" && <Palette size={10} className="text-purple-400/70" />}
+                    {!currentQuestion.category && <Sparkles size={10} className="text-accent-gold/70" />}
+                    <span className="text-[9px] font-bold tracking-tight text-text-main/80">
+                      {getCategoryLabel(currentQuestion.category)}
+                    </span>
                   </span>
                 </span>
               </div>
             </div>
 
-            <h2 className="text-2xl font-serif text-text-main text-center mb-12 leading-tight min-h-[4rem]">
+            <h2 className="text-xl md:text-2xl font-serif text-text-main text-center mb-8 md:mb-12 leading-tight min-h-[3rem] md:min-h-[4rem]">
               {currentQuestion.question}
             </h2>
 
@@ -257,24 +302,69 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({ monuments, cities, onCom
                 const showWrong = isAnswered && isSelected && !isCorrect;
 
                 return (
-                  <button
+                  <motion.button
                     key={option}
                     disabled={isAnswered}
                     onClick={() => handleOptionSelect(option)}
+                    initial={false}
+                    animate={
+                      showCorrect
+                        ? { 
+                            scale: [1, 1.05, 1],
+                            borderColor: "rgba(16, 185, 129, 1)",
+                            backgroundColor: "rgba(16, 185, 129, 0.2)"
+                          }
+                        : showWrong
+                        ? { 
+                            x: [-4, 4, -4, 4, 0],
+                            borderColor: "rgba(244, 63, 94, 1)",
+                            backgroundColor: "rgba(244, 63, 94, 0.2)"
+                          }
+                        : isAnswered && !isCorrect && !isSelected
+                        ? { opacity: 0.4, scale: 0.98 }
+                        : {}
+                    }
+                    whileHover={!isAnswered ? { scale: 1.02, borderColor: "rgba(197, 160, 89, 0.5)" } : {}}
+                    whileTap={!isAnswered ? { scale: 0.98 } : {}}
                     className={cn(
-                      "group relative p-6 rounded-2xl text-left transition-all border outline-none",
-                      !isAnswered && "bg-bg-deep/50 border-border hover:border-accent-gold/50 hover:scale-[1.02]",
-                      showCorrect && "bg-emerald-500/20 border-emerald-500/50 text-emerald-100",
-                      showWrong && "bg-rose-500/20 border-rose-500/50 text-rose-100",
-                      isAnswered && !isCorrect && !isSelected && "opacity-40"
+                      "group relative p-4 md:p-6 rounded-2xl text-left transition-all border outline-none overflow-hidden",
+                      !isAnswered && "bg-bg-deep/50 border-border",
+                      showCorrect && "text-emerald-100 shadow-[0_0_20px_rgba(16,185,129,0.15)] z-10",
+                      showWrong && "text-rose-100 shadow-[0_0_20px_rgba(244,63,94,0.15)] z-10",
+                      isAnswered && !isCorrect && !isSelected && "border-transparent"
                     )}
                   >
-                    <div className="flex items-center justify-between">
-                      <span className="font-light tracking-wide">{option}</span>
-                      {showCorrect && <CheckCircle2 size={20} className="text-emerald-500" />}
-                      {showWrong && <XCircle size={20} className="text-rose-500" />}
+                    {/* Visual indicators for state */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 hidden md:block" />
+                    
+                    <div className="flex items-center justify-between gap-4 relative z-10">
+                      <div className="flex items-center gap-3">
+                        <div className={cn(
+                          "w-6 h-6 rounded-md border flex items-center justify-center text-[10px] font-mono transition-colors",
+                          !isAnswered && "border-border text-text-muted group-hover:border-accent-gold group-hover:text-accent-gold",
+                          isSelected && !isAnswered && "bg-accent-gold border-accent-gold text-bg-deep",
+                          showCorrect && "bg-emerald-500 border-emerald-500 text-white",
+                          showWrong && "bg-rose-500 border-rose-500 text-white",
+                          isAnswered && !isCorrect && !isSelected && "opacity-20"
+                        )}>
+                          {String.fromCharCode(65 + currentQuestion.options.indexOf(option))}
+                        </div>
+                        <span className="font-light tracking-wide text-sm md:text-base leading-snug">{option}</span>
+                      </div>
+                      <AnimatePresence>
+                        {showCorrect && (
+                          <motion.div initial={{ scale: 0, rotate: -20 }} animate={{ scale: 1, rotate: 0 }}>
+                            <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
+                          </motion.div>
+                        )}
+                        {showWrong && (
+                          <motion.div initial={{ scale: 0, rotate: 20 }} animate={{ scale: 1, rotate: 0 }}>
+                            <XCircle size={18} className="text-rose-500 shrink-0" />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
@@ -292,7 +382,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({ monuments, cities, onCom
                   onClick={handleNext}
                   className="px-8 py-3 bg-accent-gold text-bg-deep text-[11px] font-bold tracking-widest rounded-xl hover:brightness-110 transition-all uppercase flex items-center gap-2 mx-auto"
                 >
-                  {currentIndex < questions.length - 1 ? "Next Analysis" : "Show Results"} <ArrowRight size={16} />
+                  {currentIndex < questions.length - 1 ? t.nextAnalysis : t.showResults} <ArrowRight size={16} className={cn(isAr && "rotate-180")} />
                 </button>
               </motion.div>
             )}
@@ -314,14 +404,14 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({ monuments, cities, onCom
             )}
             
                   <h2 className="text-4xl font-serif text-text-main mb-2">
-                    {timeLeft <= 0 ? (lang === "ar" ? "انتهى الوقت" : "Time Expired") : (lang === "ar" ? "تم تقييم الاختبار" : "Quiz Evaluated")}
+                    {timeLeft <= 0 ? t.timeExpired : t.quizEvaluated}
                   </h2>
                   <p className="text-text-muted text-sm tracking-widest uppercase font-mono mb-10">
-                    {timeLeft <= 0 ? (lang === "ar" ? "تم إنهاء الجلسة قسراً" : "Session Forcefully Terminated") : (lang === "ar" ? "تم تأكيد الكفاءة التاريخية" : "Historical Proficiency Confirmed")}
+                    {timeLeft <= 0 ? t.forceTerminated : t.profConfirmed}
                   </p>
             
             <div className="text-6xl font-mono text-accent-gold mb-12 flex flex-col items-center">
-              <span className="text-[10px] text-text-muted tracking-[0.4em] uppercase mb-2">Final Evaluation Points</span>
+              <span className="text-[10px] text-text-muted tracking-[0.4em] uppercase mb-2">{t.finalPoints}</span>
               {score}
             </div>
 
@@ -339,7 +429,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({ monuments, cities, onCom
                   }}
                   className="btn-tactical bg-emerald-600/20 border-emerald-500/30 text-emerald-400 hover:bg-emerald-600/30 w-full flex items-center justify-center gap-2"
                 >
-                  <Sparkles size={16} /> {lang === "ar" ? "المستوى التالي (متكيف)" : "Next Level (Adaptive)"}
+                  <Sparkles size={16} /> {t.nextLevel}
                 </button>
               )}
               
@@ -347,7 +437,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({ monuments, cities, onCom
                 onClick={onExit}
                 className="btn-tactical btn-tactical-gold hover-shine w-full"
               >
-                {lang === "ar" ? "العودة إلى مركز التحكم" : "Return to Control Center"}
+                {t.returnHome}
               </button>
             </div>
           </motion.div>

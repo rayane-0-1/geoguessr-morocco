@@ -236,7 +236,7 @@ export default function App() {
       )}
 
       {gameState.mode === "login" && (
-        <LoginView />
+        <LoginView lang={gameState.lang} />
       )}
     </Layout>
   );

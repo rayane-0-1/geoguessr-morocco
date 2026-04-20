@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, MapPin, Camera, Image as ImageIcon, ExternalLink, AlertCircle, Box, Loader2, Clock } from "lucide-react";
+import { X, MapPin, Camera, Image as ImageIcon, ExternalLink, AlertCircle, Loader2, Clock } from "lucide-react";
 import { Monument } from "../../types";
 import { calculateDistance, estimateTravelTime } from "../../lib/utils";
-import "@google/model-viewer";
 import { Viewer } from 'mapillary-js';
 import 'mapillary-js/dist/mapillary.css';
 
 import { assets } from "../../assets";
 
-const ModelViewerComponent = "model-viewer" as any;
-
-// Sub-component for Mapillary because it needs its own container lifecycle
 const MapillaryViewer: React.FC<{ coords: [number, number], token: string }> = ({ coords, token }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<Viewer | null>(null);
@@ -116,14 +112,29 @@ interface MonumentModalProps {
 }
 
 export const MonumentModal: React.FC<MonumentModalProps> = ({ monument, onClose, onExplored, isExplored, lang, userLocation }) => {
-  const [viewMode, setViewMode] = useState<"image" | "streetview" | "3d">("image");
-  const [prevViewMode, setPrevViewMode] = useState<"image" | "streetview" | "3d">("image");
+  const [viewMode, setViewMode] = useState<"image" | "streetview">("image");
+  const [prevViewMode, setPrevViewMode] = useState<"image" | "streetview">("image");
   const mapillaryToken = import.meta.env.VITE_MAPILLARY_API_KEY;
+  const isAr = lang === "ar";
 
-  const modeOrder = { "image": 0, "streetview": 1, "3d": 2 };
+  const t = {
+    gallery: isAr ? "معرض الصور" : "Gallery",
+    streetView: isAr ? "عرض 360°" : "360° View",
+    historicalTitle: isAr ? "تاريخ المعلم" : "Historical Chronicle",
+    archTitle: isAr ? "الخصائص المعمارية" : "Architectural DNA",
+    deployment: isAr ? "وقت الوصول المقدر" : "Estimated Deployment Time",
+    classification: isAr ? "التصنيف" : "Classification",
+    period: isAr ? "الفترة النشطة" : "Active Period",
+    synced: isAr ? "تمت الأرشفة" : "Archive Synced",
+    analyze: isAr ? "بدء التحليل التكتيكي" : "Begin Tactical Analysis",
+    historicalVal: isAr ? "تاريخي" : "Historical",
+    archPending: isAr ? "جارٍ مسح بيانات العمارة... المخطط الأثري قيد الانتظار." : "Scanning architectural data... Archeological blueprint pending."
+  };
+
+  const modeOrder = { "image": 0, "streetview": 1 };
   const direction = modeOrder[viewMode] >= modeOrder[prevViewMode] ? 1 : -1;
 
-  const handleModeChange = (newMode: "image" | "streetview" | "3d") => {
+  const handleModeChange = (newMode: "image" | "streetview") => {
     setPrevViewMode(viewMode);
     setViewMode(newMode);
   };
@@ -206,7 +217,7 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ monument, onClose,
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-bg-surface via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-bg-surface/20" />
               </motion.div>
-            ) : viewMode === "streetview" ? (
+            ) : (
               <motion.div
                 key="streetview"
                 custom={direction}
@@ -235,58 +246,6 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ monument, onClose,
                     >
                       Authenticate On Mapillary <ExternalLink size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                     </a>
-                  </div>
-                )}
-              </motion.div>
-            ) : (
-              <motion.div
-                key="3d"
-                custom={direction}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                className="w-full h-full bg-bg-deep flex flex-col items-center justify-center"
-              >
-                {monument.modelUrl ? (
-                  <ModelViewerComponent
-                    src={monument.modelUrl}
-                    alt={`Tactical 3D Projection of ${monument.name}`}
-                    auto-rotate
-                    camera-controls
-                    ar
-                    ar-modes="webxr scene-viewer quick-look"
-                    ar-placement="floor"
-                    touch-action="pan-y"
-                    shadow-intensity="1"
-                    environment-image="neutral"
-                    style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}
-                  >
-                    <div className="absolute top-4 left-4 p-3 bg-accent-gold/5 border border-accent-gold/20 rounded-xl backdrop-blur-md z-10">
-                      <p className="text-[9px] font-mono text-accent-gold tracking-widest uppercase mb-1 flex items-center gap-2">
-                        <div className="w-1 h-1 rounded-full bg-accent-gold animate-ping" />
-                        AR_Spatial_Sync_Active
-                      </p>
-                      <p className="text-[10px] text-text-main font-bold">ACTIVATE AR FEED FOR SPATIAL SCALE</p>
-                    </div>
-
-                    <button 
-                      slot="ar-button"
-                      className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 px-8 py-4 bg-accent-gold text-bg-deep rounded-2xl text-[10px] font-bold tracking-[0.3em] uppercase transition-all hover:scale-105 shadow-[0_0_30px_rgba(212,175,55,0.4)] z-10"
-                    >
-                      <Box size={16} /> {lang === 'ar' ? "نشر العرض الواقعي" : "Deploy AR Projection"}
-                    </button>
-
-                    <div className="absolute top-4 right-4 flex flex-col items-end gap-2 pointer-events-none opacity-40">
-                      <div className="text-[8px] font-mono text-accent-gold uppercase tracking-[0.2em] border-r-2 border-accent-gold px-2">X: 1.024</div>
-                      <div className="text-[8px] font-mono text-accent-gold uppercase tracking-[0.2em] border-r-2 border-accent-gold px-2">Y: -0.582</div>
-                      <div className="text-[8px] font-mono text-accent-gold uppercase tracking-[0.2em] border-r-2 border-accent-gold px-2">Z: 2.115</div>
-                    </div>
-                  </ModelViewerComponent>
-                ) : (
-                  <div className="flex flex-col items-center gap-4">
-                    <Box size={40} className="text-accent-gold/20" />
-                    <p className="text-xs text-text-muted">3D Spatial Archive Not Found</p>
                   </div>
                 )}
               </motion.div>
@@ -333,7 +292,7 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ monument, onClose,
                 />
               )}
               <span className="relative z-10 flex items-center gap-2">
-                <ImageIcon size={14} /> Gallery
+                <ImageIcon size={14} /> {t.gallery}
               </span>
             </button>
             <button 
@@ -349,31 +308,9 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ monument, onClose,
                 />
               )}
               <span className="relative z-10 flex items-center gap-2">
-                <Camera size={14} /> 360° View
+                <Camera size={14} /> {t.streetView}
               </span>
             </button>
-            {monument.modelUrl && (
-              <button 
-                onClick={() => handleModeChange("3d")}
-                className={`relative flex items-center gap-2 px-4 py-2 rounded-lg text-[10px] font-bold tracking-widest uppercase transition-all
-                  ${viewMode === "3d" ? "text-bg-deep" : "text-text-muted hover:text-text-main"}`}
-              >
-                {viewMode === "3d" && (
-                  <motion.div 
-                    layoutId="activeTab"
-                    className="absolute inset-0 bg-accent-gold rounded-lg shadow-lg shadow-accent-gold/20"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10 flex items-center gap-2">
-                  <div className="relative">
-                    <Box size={14} />
-                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-rose-500 rounded-full animate-ping" />
-                  </div>
-                  3D View
-                </span>
-              </button>
-            )}
           </div>
         </div>
 
@@ -410,11 +347,11 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ monument, onClose,
               transition={{ delay: 0.4 }}
               className="text-[13px] text-text-muted leading-relaxed font-light mb-8"
             >
-              {monument.description}
+              {isAr ? (monument.descriptionAr || monument.description) : monument.description}
             </motion.p>
 
             <AnimatePresence>
-              {monument.history && (
+              {(isAr ? (monument.historyAr || monument.history) : monument.history) && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
@@ -422,10 +359,10 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ monument, onClose,
                 >
                   <h4 className="text-[10px] font-bold tracking-[0.2em] text-accent-gold uppercase mb-3 flex items-center gap-2">
                     <div className="w-1 h-1 bg-accent-gold rounded-full" />
-                    Historical Chronicle
+                    {t.historicalTitle}
                   </h4>
                   <p className="text-[12px] text-text-muted leading-relaxed">
-                    {monument.history}
+                    {isAr ? (monument.historyAr || monument.history) : monument.history}
                   </p>
                 </motion.div>
               )}
@@ -433,15 +370,15 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ monument, onClose,
 
             <div className="mb-8 p-6 border-l-2 border-accent-gold/20 bg-accent-gold/[0.01] min-h-[100px]">
               <h4 className="text-[10px] font-bold tracking-[0.2em] text-accent-gold uppercase mb-3 text-left">
-                Architectural DNA
+                {t.archTitle}
               </h4>
-              {monument.architecture ? (
+              {(isAr ? (monument.architectureAr || monument.architecture) : monument.architecture) ? (
                 <p className="text-[12px] text-text-muted leading-relaxed italic text-left">
-                  {monument.architecture}
+                  {isAr ? (monument.architectureAr || monument.architecture) : monument.architecture}
                 </p>
               ) : (
                 <p className="text-[10px] text-text-muted/30 italic font-mono uppercase tracking-widest text-left">
-                  {lang === 'ar' ? "جارٍ مسح بيانات العمارة... المخطط الأثري قيد الانتظار." : "Scanning architectural data... Archeological blueprint pending."}
+                  {t.archPending}
                 </p>
               )}
             </div>
@@ -456,7 +393,7 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ monument, onClose,
                   <Clock size={20} />
                 </div>
                 <div>
-                  <p className="text-[9px] font-mono text-accent-gold uppercase tracking-widest mb-0.5">Estimated Deployment Time</p>
+                  <p className="text-[9px] font-mono text-accent-gold uppercase tracking-widest mb-0.5">{t.deployment}</p>
                   <p className="text-sm font-display font-medium text-text-main">
                     {estimateTravelTime(calculateDistance(userLocation[0], userLocation[1], monument.coords[0], monument.coords[1]))}
                   </p>
@@ -471,8 +408,8 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ monument, onClose,
             transition={{ delay: 0.5 }}
             className="grid grid-cols-2 gap-4 mb-10"
           >
-            <StatItem label="Classification" value="Historical" />
-            <StatItem label="Active Period" value={monument.period || "Undated"} />
+            <StatItem label={t.classification} value={t.historicalVal} />
+            <StatItem label={t.period} value={(isAr ? (monument.periodAr || monument.period) : monument.period) || (isAr ? "غير محدد" : "Undated")} />
           </motion.div>
 
           <motion.div 
@@ -489,7 +426,7 @@ export const MonumentModal: React.FC<MonumentModalProps> = ({ monument, onClose,
                   ? "bg-accent-gold/10 text-accent-gold border border-accent-gold/20 cursor-default" 
                   : "bg-accent-gold hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,175,55,0.3)] text-bg-deep active:scale-95"}`}
             >
-              {isExplored ? "Archive Synced" : "Begin Tactical Analysis"}
+              {isExplored ? t.synced : t.analyze}
             </button>
           </motion.div>
         </div>

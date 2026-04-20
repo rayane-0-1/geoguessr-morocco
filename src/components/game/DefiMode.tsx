@@ -4,15 +4,16 @@ import { Monument } from "../../types";
 import { Clock, Target, CheckCircle2, XCircle, AlertTriangle, ArrowRight, Play, Trophy } from "lucide-react";
 import { MapComponent } from "./MapComponent.tsx";
 import confetti from "canvas-confetti";
-import { shuffleArray } from "../../lib/utils";
+import { shuffleArray, cn } from "../../lib/utils";
 
 interface DefiModeProps {
   monuments: Monument[];
   onComplete: (score: number) => void;
   onExit: () => void;
+  lang: "ar" | "en";
 }
 
-export const DefiMode: React.FC<DefiModeProps> = ({ monuments, onComplete, onExit }) => {
+export const DefiMode: React.FC<DefiModeProps> = ({ monuments, onComplete, onExit, lang }) => {
   const [gameState, setGameState] = useState<"starting" | "playing" | "result" | "end">("starting");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [targets, setTargets] = useState<Monument[]>([]);
@@ -22,6 +23,29 @@ export const DefiMode: React.FC<DefiModeProps> = ({ monuments, onComplete, onExi
   const [guessCoords, setGuessCoords] = useState<[number, number] | null>(null);
   const [lastDistance, setLastDistance] = useState<number | null>(null);
   const [lastXP, setLastXP] = useState<number | null>(null);
+
+  const isAr = lang === "ar";
+  const t = {
+    timeRemaining: isAr ? "الوقت المتبقي" : "TIME REMAINING",
+    modeHeader: isAr ? "وضع التحدي" : "Challenge Mode",
+    modeDesc: isAr ? "حدد 5 معالم بأسرع ما يمكن لمضاعفة نتيجتك. يجب عليك النقر على الموقع التقريبي على الخريطة." : "Identify 5 monuments as fast as possible to maximize your score. You must click the approximate location on the map.",
+    init: isAr ? "بدء التحدي" : "INITIALIZE CHALLENGE",
+    objectiveOf: isAr ? "الهدف" : "OBJECTIVE",
+    locate: isAr ? "حدد موقع:" : "Locate:",
+    tacticalMatch: isAr ? "مطابقة تكتيكية" : "Tactical Match",
+    offTarget: isAr ? "خارج الهدف" : "Off Target",
+    distance: isAr ? "المسافة" : "Distance",
+    impact: isAr ? "التأثير" : "Impact",
+    nextAnalysis: isAr ? "التحليل التالي" : "Next Analysis",
+    finalize: isAr ? "إنهاء التقرير" : "Finalize Report",
+    endEarly: isAr ? "إنهاء التحدي مبكراً" : "End Challenge Early",
+    timedOut: isAr ? "انتهى الوقت" : "Timed Out",
+    opSuccess: isAr ? "نجاح العملية" : "Operation Success",
+    finalPoints: isAr ? "نقاط التقييم النهائية" : "Final Evaluation Points",
+    backToControl: isAr ? "العودة إلى مركز التحكم" : "BACK TO CONTROL",
+    waiting: isAr ? "في انتظار المزامنة..." : "Waiting for synchronization...",
+    pressInit: isAr ? "اضغط على بدء التحدي لبدء مسح القمر الصناعي. سيظهر لك معلم للعثور عليه على الخريطة." : "Press INITIALIZE CHALLENGE to begin the satellite scan. You will be shown a monument to find on the map."
+  };
 
   useEffect(() => {
     if (gameState === "starting") {
@@ -111,17 +135,17 @@ export const DefiMode: React.FC<DefiModeProps> = ({ monuments, onComplete, onExi
   };
 
   return (
-    <div className="flex-1 flex gap-6 relative">
+    <div className="flex-1 flex flex-col md:flex-row gap-4 md:gap-6 relative p-4 md:p-6 overflow-hidden">
       {/* Simulation Info Console */}
-      <div className="w-[300px] flex flex-col gap-6 z-20 shrink-0">
-        <div className="flex-1 p-8 bg-bg-surface border border-border rounded-3xl shadow-2xl flex flex-col items-center text-center overflow-y-auto custom-scrollbar">
+      <div className="w-full md:w-[300px] flex flex-col gap-4 md:gap-6 z-20 shrink-0 h-[40vh] md:h-auto overflow-hidden">
+        <div className="flex-1 p-6 md:p-8 bg-bg-surface border border-border rounded-3xl shadow-2xl flex flex-col items-center text-center overflow-y-auto custom-scrollbar">
           <div className="mb-10 w-full">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 rounded-lg bg-accent-gold-muted border border-accent-gold/20 flex items-center justify-center">
                 <Clock size={16} className="text-accent-gold" />
               </div>
-              <div className="flex flex-col text-left">
-                <span className="text-[10px] font-bold tracking-widest text-accent-gold uppercase">TIME REMAINING</span>
+              <div className={cn("flex flex-col text-left", isAr && "text-right")}>
+                <span className="text-[10px] font-bold tracking-widest text-accent-gold uppercase">{t.timeRemaining}</span>
                 <span className={`text-xl font-mono tabular-nums ${timeLeft < 5 ? "text-rose-500 animate-pulse" : "text-text-main"}`}>
                   {timeLeft.toString().padStart(2, "0")}s
                 </span>
@@ -147,13 +171,13 @@ export const DefiMode: React.FC<DefiModeProps> = ({ monuments, onComplete, onExi
                 <div className="p-4 bg-accent-gold-muted border border-accent-gold/20 rounded-2xl mb-6">
                   <Play size={32} className="text-accent-gold" />
                 </div>
-                <h3 className="text-xl font-serif text-text-main mb-4">Challenge Mode</h3>
-                <p className="text-xs text-text-muted mb-8 leading-relaxed italic">Identify 5 monuments as fast as possible to maximize your score. You must click the approximate location on the map.</p>
+                <h3 className="text-xl font-serif text-text-main mb-4">{t.modeHeader}</h3>
+                <p className="text-xs text-text-muted mb-8 leading-relaxed italic">{t.modeDesc}</p>
                 <button 
                   onClick={startChallenge}
                   className="btn-tactical btn-tactical-gold hover-shine w-full"
                 >
-                  INITIALIZE CHALLENGE
+                  {t.init}
                 </button>
               </motion.div>
             )}
@@ -178,15 +202,10 @@ export const DefiMode: React.FC<DefiModeProps> = ({ monuments, onComplete, onExi
                 <div className="w-12 h-12 bg-accent-gold-muted border border-accent-gold/30 rounded-2xl flex items-center justify-center mb-4">
                   <Target size={24} className="text-accent-gold" />
                 </div>
-                <p className="text-[10px] text-text-muted font-mono mb-2 uppercase tracking-widest">OBJECTIVE {currentIndex + 1} / 5</p>
-                <h2 className="text-xl font-serif text-text-main mb-6 border-b border-border pb-4 w-full">
-                  Locate: <br />
-                  <span className="text-accent-gold">{currentTarget.name}</span>
-                  {currentTarget.nameAr && (
-                    <div className="text-sm font-sans text-accent-gold/60 mt-1" dir="rtl">
-                      {currentTarget.nameAr}
-                    </div>
-                  )}
+                <p className="text-[10px] text-text-muted font-mono mb-2 uppercase tracking-widest">{t.objectiveOf} {currentIndex + 1} / 5</p>
+                <h2 className={cn("text-xl font-serif text-text-main mb-6 border-b border-border pb-4 w-full", isAr && "text-right")}>
+                  {t.locate} <br />
+                  <span className="text-accent-gold">{isAr ? (currentTarget.nameAr || currentTarget.name) : currentTarget.name}</span>
                 </h2>
 
                 <AnimatePresence mode="wait">
@@ -213,12 +232,12 @@ export const DefiMode: React.FC<DefiModeProps> = ({ monuments, onComplete, onExi
                             >
                               <CheckCircle2 size={16} />
                             </motion.div>
-                            <span className="text-[10px] font-bold tracking-[0.2em] uppercase">Tactical Match</span>
+                            <span className="text-[10px] font-bold tracking-[0.2em] uppercase">{t.tacticalMatch}</span>
                           </>
                         ) : (
                           <>
                             <XCircle size={16} />
-                            <span className="text-[10px] font-bold tracking-[0.2em] uppercase">Off Target</span>
+                            <span className="text-[10px] font-bold tracking-[0.2em] uppercase">{t.offTarget}</span>
                           </>
                         )}
                       </motion.div>
@@ -226,14 +245,14 @@ export const DefiMode: React.FC<DefiModeProps> = ({ monuments, onComplete, onExi
                       <div className="grid grid-cols-2 gap-4 w-full">
                         <div className={`p-4 rounded-2xl border transition-colors flex flex-col items-center
                           ${feedback === "correct" ? "bg-white/[0.03] border-white/5" : "bg-rose-500/[0.02] border-rose-500/10"}`}>
-                          <span className="text-[9px] text-text-muted uppercase tracking-widest mb-1">Distance</span>
+                          <span className="text-[9px] text-text-muted uppercase tracking-widest mb-1">{t.distance}</span>
                           <span className={`text-lg font-mono ${feedback === "wrong" ? "text-rose-500/80" : "text-text-main"}`}>
                             {lastDistance.toFixed(1)} km
                           </span>
                         </div>
                         <div className={`p-4 rounded-2xl border transition-colors flex flex-col items-center
                           ${feedback === "correct" ? "bg-accent-gold/5 border-accent-gold/20" : "bg-white/[0.03] border-white/5"}`}>
-                          <span className="text-[9px] text-text-muted uppercase tracking-widest mb-1">Impact</span>
+                          <span className="text-[9px] text-text-muted uppercase tracking-widest mb-1">{t.impact}</span>
                           <span className={`text-lg font-mono ${feedback === "correct" ? "text-accent-gold" : "text-text-muted"}`}>
                             +{lastXP} XP
                           </span>
@@ -243,9 +262,9 @@ export const DefiMode: React.FC<DefiModeProps> = ({ monuments, onComplete, onExi
                       <div className="flex flex-col gap-3 w-full">
                         <button 
                           onClick={nextTarget}
-                          className="btn-tactical btn-tactical-gold hover-shine w-full"
+                          className="btn-tactical btn-tactical-gold hover-shine w-full flex items-center justify-center gap-2"
                         >
-                          {currentIndex < targets.length - 1 ? "Next Analysis" : "Finalize Report"} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                          {currentIndex < targets.length - 1 ? t.nextAnalysis : t.finalize} <ArrowRight size={14} className={cn("group-hover:translate-x-1 transition-transform", isAr && "rotate-180 group-hover:-translate-x-1")} />
                         </button>
                         
                         <button 
@@ -255,7 +274,7 @@ export const DefiMode: React.FC<DefiModeProps> = ({ monuments, onComplete, onExi
                           }}
                           className="btn-tactical btn-tactical-outline w-full"
                         >
-                          End Challenge Early
+                          {t.endEarly}
                         </button>
                       </div>
                     </motion.div>
@@ -263,7 +282,7 @@ export const DefiMode: React.FC<DefiModeProps> = ({ monuments, onComplete, onExi
                   {timeLeft === 0 && gameState === "playing" && !feedback && (
                     <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex flex-col items-center">
                       <AlertTriangle size={40} className="text-rose-500 mb-2" />
-                      <span className="text-rose-500 text-[10px] font-bold tracking-widest uppercase">Timed Out</span>
+                      <span className="text-rose-500 text-[10px] font-bold tracking-widest uppercase">{t.timedOut}</span>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -273,7 +292,7 @@ export const DefiMode: React.FC<DefiModeProps> = ({ monuments, onComplete, onExi
             {gameState === "end" && (
               <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center">
                 <Trophy size={48} className="text-accent-gold mb-6 drop-shadow-[0_0_15px_rgba(197,160,89,0.3)]" />
-                <h3 className="text-2xl font-serif text-text-main mb-2">Operation Success</h3>
+                <h3 className="text-2xl font-serif text-text-main mb-2">{t.opSuccess}</h3>
                 <div className="text-4xl font-mono text-text-main mb-10 tabular-nums">
                   {score.toString().padStart(5, "0")}
                 </div>
@@ -281,7 +300,7 @@ export const DefiMode: React.FC<DefiModeProps> = ({ monuments, onComplete, onExi
                   onClick={onExit}
                   className="w-full py-4 bg-accent-gold text-bg-deep text-[11px] font-bold tracking-widest rounded-xl hover:brightness-110 transition-all uppercase"
                 >
-                  BACK TO CONTROL
+                  {t.backToControl}
                 </button>
               </motion.div>
             )}
@@ -304,8 +323,8 @@ export const DefiMode: React.FC<DefiModeProps> = ({ monuments, onComplete, onExi
           <div className="absolute inset-0 bg-bg-deep/60 backdrop-blur-sm z-30 flex items-center justify-center p-12 text-center pointer-events-none">
             {gameState === "starting" && (
               <div className="max-w-md">
-                <p className="text-accent-gold font-mono text-[10px] tracking-[0.5em] uppercase mb-4 animate-pulse">Waiting for synchronization...</p>
-                <p className="text-text-muted text-sm italic">Press INITIALIZE CHALLENGE to begin the satellite scan. You will be shown a monument to find on the map.</p>
+                <p className="text-accent-gold font-mono text-[10px] tracking-[0.5em] uppercase mb-4 animate-pulse">{t.waiting}</p>
+                <p className="text-text-muted text-sm italic">{t.pressInit}</p>
               </div>
             )}
           </div>

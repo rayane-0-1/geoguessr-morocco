@@ -60,6 +60,7 @@ export class AIQuizService {
       2. Difficulty: ${difficulty.toUpperCase()}.
       3. Categories weighting:
          ${categoryInstruction}
+         ONLY use these specific category strings: "geography", "history", "culture".
       4. Diversity: Cover different regions (North, Atlas, Sahara, Coastal).
       5. Context: Use the provided structured data about monuments and cities as primary source, but you can also include general knowledge about Moroccan culture and history.
       6. Format: Return a JSON array of objects following the QuizQuestion schema.
@@ -104,7 +105,7 @@ export class AIQuizService {
                 source: { type: Type.STRING },
                 category: { type: Type.STRING }
               },
-              required: ["id", "question", "options", "answer", "explanation"]
+              required: ["id", "question", "options", "answer", "explanation", "category"]
             }
           }
         }
